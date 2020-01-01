@@ -226,7 +226,7 @@ def Train_seq_model(models,criterion,optimizer,loader,scheduler,shape_eeg,shape_
     scheduler.step()
   mean_loss=np.mean(losses)
   print('{} Loss {:.4f}  Acc : {:.2%}  f1 score {:.2f}'.format(mode,mean_loss,correct/total,f1_score(Actual,Preds,average='weighted')))
-  return losses
+  return mean_loss
 
 
 """----------------------------------------------------------------------------------------------------------------------------"""
