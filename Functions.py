@@ -68,7 +68,7 @@ def create_loader(X,y,batch_size,shuffle=True):
 
 
 
-def Oversample(df,y,shape,split=.2):
+def Oversample(df,y,shape,split=.2,shuffle=True):
   """Oversampling Data to avoid Class inbalance issue
   Parmaeters :
   ------------
@@ -81,7 +81,7 @@ def Oversample(df,y,shape,split=.2):
   oversampled splitted data (Train and Validation)
   """
   X=df.values.reshape(shape[0],-1)
-  X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=split)
+  X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=split,shuffle=shuffle)
   X_resampled, y_resampled = SMOTE(n_jobs=-1).fit_resample(X_train, y_train)
  #Adapting Data Shape
   X_resampled=X_resampled.reshape((X_resampled.shape[0],)+shape[1:])
