@@ -57,7 +57,7 @@ class Seq_learn(nn.Module):
     self.lstm=nn.LSTM(input_size=self.hidden_size,hidden_size=self.hidden_size,
                 num_layers=self.n_layers,dropout=drop,batch_first=True,
                 bidirectional =True)
-    self.lin=nn.Sequential(nn.Dropout(drop),nn.Linear(3*self.hidden_size*self.lookback,500),
+    self.lin=nn.Sequential(nn.Dropout(drop),nn.Linear(2*self.hidden_size*self.lookback+self.hidden_size,500),
                            nn.BatchNorm1d(500),nn.ReLU(inplace=True),nn.Dropout(drop),
                            nn.Linear(500,5)
                            )
@@ -73,7 +73,7 @@ class Seq_learn(nn.Module):
     #print(lstm_out.shape)
     lstm_out=lstm_out.contiguous().view(lstm_out.size(0), -1)
     if self.Residual :
-      residual=torch.cat([input.reshape(input.shape[0],-1),lstm_out],dim=1)
+      residual=torch.cat([input.reshape(input[:,-1,:].shape[0],-1),lstm_out],dim=1)
       #print(residual.shape)
       return self.lin(residual)
     else:
